@@ -1,7 +1,7 @@
 #include <iostream> 
 using namespace std;
 
-//testing to see if this git thing works 
+//main function
 int main() 
 {
     //intalizing variables
