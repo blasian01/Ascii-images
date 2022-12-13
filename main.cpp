@@ -1,60 +1,57 @@
-#include <iostream> 
-#include <math.h>
-#include <string>
+#include <iostream>
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 using namespace std;
+using namespace cv;
 
-//main function
-int main() 
+int main()
 {
-    //intalizing variables
-    const string density = "Ñ@#W$9876543210?!abc;:+=-,._ "; //acii to represent the pixel density
-    ifstream image(".jpg"); 
-    int height, width
-    int r, g, b, grey;
-
-    string filePath;
-    string exportPath;
-
-
-    // asking user to type in the file path to the photo they want to convert to ascii
-    do
+    // Open the camera
+    VideoCapture cap(0);
+    if (!cap.isOpened())
     {
-        cout << "Please enter a file path to a photo: ";
-        cin >> filePath;
+        cerr << "Failed to open the camera." << endl;
+        return -1;
     }
-    while(filePath == true);  // if the path does not lead to a photo then ask the user to try again
 
+    // Take a picture with the camera
+    Mat frame;
+    cap >> frame;
 
-    //ask user for a directory that they would like theyre photo to be exported to
-    do
+    // Convert the image to grayscale
+    Mat gray;
+    cvtColor(frame, gray, COLOR_BGR2GRAY);
+
+    // Resize the image to reduce the number of pixels
+    // This will make the ASCII art more detailed
+    Size size(100, 100);
+    resize(gray, gray, size);
+
+    // Create a string that contains the characters to use for the ASCII art
+    // These characters should be ordered from darkest to lightest
+    string asciiChars = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+
+    // Loop through the pixels in the image and convert them to ASCII characters
+    for (int y = 0; y < gray.rows; y++)
     {
-        cout << "Please enter a file path to export to: ";
-        cin >> exportPath;
-    }
-    while(exportPath == true);  // if the path does not lead to a photo then ask the user to try again
-
-
-    //reading the pixels from the image that is selected
-    for(int i = 0; i < positionX; i++)
-    {
-        for(int k = 0; k < positionY; k++)
+        for (int x = 0; x < gray.cols; x++)
         {
+            // Get the grayscale value of the pixel
+            int value = gray.at<uchar>(y, x);
 
+            // Map the grayscale value to a character from the asciiChars string
+            int index = (int)((float)value / 255.0f * (asciiChars.size() - 1));
+            char character = asciiChars[index];
+
+            // Print the character to the screen
+            cout << character;
         }
+
+        // Add a newline character at the end of each row
+        cout << endl;
     }
-
-    //converting pixel value from rgb to grey scale for brightness 
-
-
-    // replacing pixels with ascii 
-    
-    
-    //rendering new image
-
-
-    //pasting new image to a selcted directory
-
-    cout << "Success" << endl;
 
     return 0;
 }
