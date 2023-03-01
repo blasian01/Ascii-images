@@ -1,8 +1,20 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
+
+#include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <chrono>
 using namespace std;
 using namespace cv;
 
@@ -23,6 +35,7 @@ int main()
     // Convert the image to grayscale
     Mat gray;
     cvtColor(frame, gray, COLOR_BGR2GRAY);
+using namespace std::chrono;
 
     // Resize the image to reduce the number of pixels
     // This will make the ASCII art more detailed
@@ -52,6 +65,4 @@ int main()
         // Add a newline character at the end of each row
         cout << endl;
     }
-
-    return 0;
 }
