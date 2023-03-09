@@ -3,39 +3,40 @@
 #include <string>
 #include <cmath>
 #include <chrono>
+
 using namespace std;
 using namespace std::chrono;
-
-#include <iostream>
-#include <opencv2/opencv.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-
-#include <fstream>
-#include <string>
-#include <cmath>
-#include <chrono>
-using namespace std;
-using namespace cv;
 
 int main()
 {
     // Open the camera
-    VideoCapture cap(0);
-    if (!cap.isOpened())
-    {
-        cerr << "Failed to open the camera." << endl;
-        return -1;
-    }
+    // This can be replaced with code to read an image file
+    // For example, you could use the following line of code:
+    // Mat frame = imread("image.jpg", IMREAD_COLOR);
 
     // Take a picture with the camera
+    // This can be replaced with code to read an image file
+    // For example, you could use the following line of code:
+    // Mat frame = imread("image.jpg", IMREAD_COLOR);
     Mat frame;
-    cap >> frame;
+    //Code to read an image file
+    ifstream file("image.jpg", ios::binary | ios::ate);
+    streamsize size = file.tellg();
+    file.seekg(0, ios::beg);
+    vector<char> buffer(size);
+    if (file.read(buffer.data(), size))
+    {
+        Mat img = imdecode(Mat(buffer), IMREAD_COLOR);
+    }
+    else
+    {
+        cerr << "Failed to read image file." << endl;
+        return -1;
+    }
 
     // Convert the image to grayscale
     Mat gray;
     cvtColor(frame, gray, COLOR_BGR2GRAY);
-using namespace std::chrono;
 
     // Resize the image to reduce the number of pixels
     // This will make the ASCII art more detailed
@@ -65,4 +66,6 @@ using namespace std::chrono;
         // Add a newline character at the end of each row
         cout << endl;
     }
+
+    return 0;
 }
